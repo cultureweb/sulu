@@ -29,11 +29,11 @@ Have a look at the official [Sulu website](https://sulu.io/) for a comprehensive
 </p>
 <br/>
 
-# Environnement de développement du projet
+# Project development environment
 
-## Prérequis
+## Prerequisites
 
-Avoir docker 😉 qui tourne sur sa machine (vm ou wsl).
+Having docker 😉 that runs (vm ou wsl).
 ```
 docker -v
 Docker version 19.03.12, build 48a66213fe
@@ -45,7 +45,64 @@ Docker version 19.03.12, build 48a66213fe
 
 #### Commandes à exécuter pour démarrer :
 
-- `docker-compose up -d` pour lancer tous les containers
-- `docker-compose exec apache bash` pour entrer en BASH dans le container
-- `chmod -R 777 *` depuis le container peux être necessaire
+- `docker-compose up -d` to launch all containers
+- `docker-compose exec apache bash` to get into the container
+- `chmod -R 777 *` from inside the container
 - `composer install`
+
+
+#### Webspaces
+
+The content management part of Sulu is built upon webspaces. Each of these webspaces configures a content tree. Each content tree may contain translations for different locales.
+
+The default webspace configuration is located in ```config/webspaces/example.xml.``` Rename this file so that it matches the name of your project.
+
+To get started, change the```<name>``` and the ```<key>``` of the webspace to the name of your project. The name is a human-readable label that is shown in the administration interface. The key is the unique identifier of the webspace:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<webspace xmlns="http://schemas.sulu.io/webspace/webspace"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://schemas.sulu.io/webspace/webspace http://schemas.sulu.io/webspace/webspace-1.1.xsd">
+
+    <name>My Project</name>
+    <key>my-project</key>
+
+    <!-- ... -->
+</webspace>
+```
+
+```
+Caution
+
+Changing the <key> of a webspace later on causes complications. We recommend to decide what key to use before you build the database in the next step.
+```
+#### Create the database
+
+- Duplicate .env.dist to .env
+- `php bin/console doctrine:database:create`
+  
+
+- `php bin/adminconsole sulu:build dev`
+
+#### Configuring webspace 
+The default webspace configuration is located in `config/webspaces/zehero.xml`. Rename this file so that it matches the name of your project. 
+
+ ```
+ <?xml version="1.0" encoding="utf-8"?>
+<webspace xmlns="http://schemas.sulu.io/webspace/webspace"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://schemas.sulu.io/webspace/webspace http://schemas.sulu.io/webspace/webspace-1.1.xsd">
+
+    <name>My Project</name>
+    <key>my-project</key>
+
+      <localizations>
+        <!-- See: http://docs.sulu.io/en/latest/book/localization.html how to add new localizations -->
+        <localization language="en" default="true"/>
+        <localization language="fr"/>
+    </localizations>
+  ```
+**After adding localizations in the webspace, note that you need to run**
+- `php bin/adminconsole sulu:document:initialize`
+
+
