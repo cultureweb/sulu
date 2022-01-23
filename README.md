@@ -97,4 +97,18 @@ The default webspace configuration is located in `config/webspaces/zehero.xml`. 
 **After adding localizations in the webspace, note that you need to run**
 - `php bin/adminconsole sulu:document:initialize`
 
+### Using Webpack Encore for your website assets
 
+Webpack Encore is a tool to manage your javascript and css assets. It seamlessly integrates webpack into your symfony application.
+
+Installation
+First add the WebpackEncoreBundle as a dependency to your `composer.json` file.
+
+- `composer require symfony/webpack-encore-bundle`
+To enable it, add the following line to the `config/bundles.php` file, if that has not been done already for you by Symfony Flex:
+ ```
+return [
+...
+Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+];
+ ```
