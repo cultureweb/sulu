@@ -84,19 +84,11 @@ Changing the <key> of a webspace later on causes complications. We recommend to 
 
 - `php bin/adminconsole sulu:build dev`
 
-#### Configuring webspace 
+#### Configuring webspace localizations
 The default webspace configuration is located in `config/webspaces/zehero.xml`. Rename this file so that it matches the name of your project. 
 
  ```
- <?xml version="1.0" encoding="utf-8"?>
-<webspace xmlns="http://schemas.sulu.io/webspace/webspace"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://schemas.sulu.io/webspace/webspace http://schemas.sulu.io/webspace/webspace-1.1.xsd">
-
-    <name>My Project</name>
-    <key>my-project</key>
-
-      <localizations>
+       <localizations>
         <!-- See: http://docs.sulu.io/en/latest/book/localization.html how to add new localizations -->
         <localization language="en" default="true"/>
         <localization language="fr"/>
