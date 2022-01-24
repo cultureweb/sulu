@@ -19,42 +19,50 @@
     {% endblock %}
 </head>
 <body>
-    <header>
-        {% block header %}
-            <nav>
-                <ul>
+<header>
+    {% block header %}
+        <nav class="navbar navbar-light navbar-expand-lg py-3 px-4">
+            <a class="navbar-brand" href="">
+                ZEHERO</a>
+            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span> </span>
+                <span> </span>
+                <span> </span>
+            </button>
+            <ul>
+                <li>
+                    <a href="{{ sulu_content_root_path() }}">Homepage</a>
+                </li>
+
+                {% for item in sulu_navigation_root_tree('main') %}
                     <li>
-                        <a href="{{ sulu_content_root_path() }}">Homepage</a>
+                        <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"
+                           title="{{ item.title }}">{{ item.title }}</a>
                     </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    {% endblock %}
+</header>
 
-                    {% for item in sulu_navigation_root_tree('main') %}
-                        <li>
-                            <a href="{{ sulu_content_path(item.url, item.webspaceKey) }}"
-                               title="{{ item.title }}">{{ item.title }}</a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </nav>
-        {% endblock %}
-    </header>
+<form action="{{ path('sulu_search.website_search') }}" method="GET">
+    <input name="q" type="text" placeholder="Search"/>
+    <input type="submit" value="Go"/>
+</form>
 
-    <form action="{{ path('sulu_search.website_search') }}" method="GET">
-        <input name="q" type="text" placeholder="Search"/>
-        <input type="submit" value="Go"/>
-    </form>
+<main>
+    {% block content %}{% endblock %}
+</main>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+<footer>
+    {% block footer %}
+        <p>Copyright {{ 'now'|date('Y') }} SULU</p>
+    {% endblock %}
+</footer>
 
-    <footer>
-        {% block footer %}
-            <p>Copyright {{ 'now'|date('Y') }} SULU</p>
-        {% endblock %}
-    </footer>
-
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-     {% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </body>
 </html>

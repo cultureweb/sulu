@@ -11,7 +11,7 @@
 
     <meta>
         <title lang="en">Homepage</title>
-        <title lang="fr">Page accueil</title>
+        <title lang="fr">Accueil</title>
     </meta>
 
     <properties>
@@ -42,5 +42,115 @@
                 <title lang="fr">Article</title>
             </meta>
         </property>
+        <section name="linkList">
+            <meta>
+                <title lang="en">link List</title>
+                <title lang="fr">liste des rubriques</title>
+            </meta>
+            <properties>
+                <property name="linkListHeadLine" type="text_line">
+                    <meta>
+                        <title lang="en">Headline</title>
+                        <title lang="fr">Entête</title>
+                    </meta>
+                </property>
+                <property name="linkListSubLine" type="text_line">
+                    <meta>
+                        <title lang="en">Subline</title>
+                        <title lang="fr">Entête</title>
+                    </meta>
+                </property>
+                <block name="linkListItems" default-type="" minOccurs="0">
+                    <meta>
+                        <title lang="en">Link items</title>
+                        <title lang="fr">éléments de lien</title>
+                    </meta>
+                    <types>
+                        <type name="linkItem">
+                            <meta>
+                                <title lang="en">Item</title>
+                                <title lang="fr">Elément</title>
+                            </meta>
+                            <properties>
+                                <property name="linkItemDisplay" type="text_line" colspan="6">
+                                    <meta>
+                                        <title lang="en">Display</title>
+                                    </meta>
+                                </property>
+                                <property name="linkItemUrl" type="url" colspan="6">
+                                    <meta>
+                                        <title lang="en">Url</title>
+                                    </meta>
+                                </property>
+                            </properties>
+                        </type>
+                    </types>
+                </block>
+            </properties>
+        </section>
+
+        <section name="whoWeAre">
+            <meta>
+                <title lang="en">Who we are</title>
+                <title lang="fr">Qui sommes nous</title>
+            </meta>
+            <properties>
+                <property name="whoWeAreSubline" type="text_line" colspan="6">
+                    <meta>
+                        <title lang="en">Subline</title>
+                    </meta>
+                </property>
+                <property name="whoWeAreHeadline" type="text_line" colspan="6">
+                    <meta>
+                        <title lang="en">Headline</title>
+                    </meta>
+                </property>
+                <property name="whoWeAreDescription" type="text_editor">
+                    <meta>
+                        <title lang="en">Description</title>
+                    </meta>
+
+                    <params>
+                        <param name="table" value="false"/>
+                        <param name="link" value="true"/>
+                        <!-- CKEditor Parameters -->
+                        <param name="extra_allowed_content" value="img(*)[*]; div(*)[*]; iframe(*)[*]; script(*)[*];"/>
+                        <param name="ui_color" value="#ffcc00"/>
+                    </params>
+                </property>
+                <property name="whoWeAreImage" type="media_selection" maxOccurs="1">
+                    <meta>
+                        <title lang="en">Image</title>
+                    </meta>
+                    <params>
+                        <param name="type" value="image"/>
+                    </params>
+                </property>
+                <block name="whoWeAreItems" default-type="items" minOccurs="0">
+                    <meta>
+                        <title lang="en">Items</title>
+                    </meta>
+                    <types>
+                        <type name="items">
+                            <properties>
+                                <property name="image" type="media_selection" maxOccurs="1" colspan="6">
+                                    <meta>
+                                        <title lang="en">Image</title>
+                                    </meta>
+                                    <params>
+                                        <param name="types" value="image" />
+                                    </params>
+                                </property>
+                                <property name="text" type="text_line" colspan="6">
+                                    <meta>
+                                        <title lang="en">Text</title>
+                                    </meta>
+                                </property>
+                            </properties>
+                        </type>
+                    </types>
+                </block>
+            </properties>
+        </section>
     </properties>
 </template>

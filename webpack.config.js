@@ -8,17 +8,14 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 Encore
     // directory where compiled assets will be stored
-    .setOutputPath('public/build/website/')
+    .setOutputPath('public/build/website')
     // public path used by the web server to access the output path
     .setPublicPath('/build/website')
     // only needed for CDN's or sub-directory deploy
-    //.setManifestKeyPrefix('build/website/')
+    //.setManifestKeyPrefix('build/')
 
     /*
      * ENTRY CONFIG
-     *
-     * Add 1 entry for each "page" of your app
-     * (including one that's included on every page - e.g. "app")
      *
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
@@ -26,14 +23,14 @@ Encore
     .addEntry('app', './assets/website/app.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/website/controllers.json')
+    // .enableStimulusBridge('./assets/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
-    .enableSingleRuntimeChunk()
+    .disableSingleRuntimeChunk()
 
     /*
      * FEATURE CONFIG
@@ -59,7 +56,13 @@ Encore
     })
 
     // enables Sass/SCSS support
-    //.enableSassLoader()
+    .enableSassLoader()
+
+    .copyFiles({
+            from: './assets/images',
+            to:'images/[path][name].[hash:8].[ext]'
+        }
+    )
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -73,6 +76,14 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
+
+    // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+    // .enableStimulusBridge('./assets/website/controllers.json')
+
+Encore.configureWatchOptions(watchOptions => {
+    watchOptions.poll = 250; // check for changes every 250 milliseconds
+
+});
 ;
 
 module.exports = Encore.getWebpackConfig();

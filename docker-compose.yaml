@@ -1,36 +1,55 @@
-version: '2'
+version: '3'
+# do not forget the version line, this file syntax is invalid without it
+
 services:
   apache:
-    image: cultureweb/symfony:5-php-7.4-v2.0
-    volumes:
-      - "./docker.php.settings.ini:/usr/local/etc/php/conf.d/docker.php.settings.ini"
-      - "./:/var/www/html"
-      - "/var/www/html/var"
-    links:
-      - mysql:mysqlhost
+    build: php
+    container_name: www_docker_newmarket
     ports:
       - 8742:80
     environment:
       - DOCKER_DEBUG=1
       - DOCKER_CACHE=1
+      - XDEBUG_CONFIG=${XDEBUG_CONFIG}
+    volumes:
+      - ./docker.php.settings.ini:/usr/local/etc/php/conf.d/docker.php.settings.ini
+      - ./php/vhosts:/etc/apache2/sites-enabled
+      - ./:/var/www/html
+      - /var/www/html/var
+    networks:
+      - dev
 
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    links:
-      - mysql:db
+    image: phpmyadmin
+    container_name: phpmyadmin_docker_newmarket
+    restart: always
+    depends_on:
+      - db
     ports:
-      -  8081:80
+      - "8081:80"
     environment:
-      MYSQL_USERNAME: root
-      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: db
+    networks:
+      - dev
 
-  mysql:
-    image: mysql:5.7
+  db:
+    image: mysql
+    container_name: db_docker_newmarket
+    restart: always
     volumes:
-      - "./_docker-data-mysql:/var/lib/mysql"
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
     ports:
       - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-    command:
-      mysqld --innodb-flush-method=littlesync --innodb-use-native-aio=OFF
+    expose:
+      - 3306
+    networks:
+      - dev
+
+networks:
+  dev:
+
+volumes:
+  db-data:
