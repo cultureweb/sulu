@@ -112,3 +112,10 @@ return [
 Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 ];
  ```
+
+#### Update the Admin JavaScript build
+Our administration interface requires a built version of its JavaScript code in the `public/build/admin` folder of the project. The JavaScript code might be adjusted between different versions to fix bugs or implement new features. When upgrading the project, you need to update the build to match the new Sulu version. To simplify this step, Sulu provides a command to update the JavaScript build in the project:
+
+$ bin/console sulu:admin:update-build
+- `php bin/console sulu:admin:update-build`
+
